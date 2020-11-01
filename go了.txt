@@ -1,0 +1,171 @@
+
+cd thebase
+sudo tar -C /usr/local -xzf go1.15.3.linux-amd64.tar.gz
+
+sudo vim /etc/profile
+
+# go begin
+export PATH=$PATH:/usr/local/go/bin
+export GO111MODULE=on
+export GOPROXY=https://goproxy.cn
+# go end
+
+
+Packages are published in modules -- like rsc.io/quote
+module可以再更新版本
+
+导入package。从其他module import package
+
+go.mod：列出特定的module和module的version，module提供了package，package中就是function
+
+go run会：locate&download module。而这个module中包含了我们所import的package
+go的build命令会 locate 我们package所需要的module
+
+把自己的代码 放入 module，这样可以 tracking dependencies。放入module后，就可以被其他人使用了
+
+
+go mod init example.com/greetings
+我们的代码将放入 该路径所指定的 module 中。module是可以被下载的（如果maven下载jar一样）
+
+package中放入的是 一些function
+
+被 package之外的function 所调用，即public的方法，大写开头
+
+:=
+声明&初始化。求值出的类型，就是变量的类型
+
+ log.Fatal(err) 这会终止程序运行
+
+
+formats := []string{
+        "Hi, %v. Welcome!",
+        "Great to see you, %v!",
+        "Hail, %v! Well met!",
+    }
+如上 声明 slice 时，忽略掉 size，这意味着 slice底层的数组 可以动态改变大小
+ names :=[]string{"Gladys", "Samantha", "Darrin"}
+
+看清楚了哦，slice直接用就好；但，map需要make下
+
+Go executes *init functions automatically at program startup*, after global variables have been initialized
+
+
+In Go, you *initialize a map* with the following syntax: make(map[key-type]value-type). 
+
+
+GOPATH就是用来解析 import中的那些package的
+
+从 GOPATH 列举的地方查找 gocode
+
+GOPATH中列出的目录，都具有预先定义好的结构
+src-->持有源代码
+和src同级的路径则是：可执行文件、import path
+
+pkg：下面是installed package object（安装好的 包 对象 ）
+
+待引用的 package
+GOPATH/mydir/ src/foo/bar，则可以：
+import "foo/bar"
+
+已编译好的二进制版本
+GOPATH/mydir/ pkg/GOOS_GOARCH/foo/bar.a
+
+可执行的命令
+GOPATH/mydir/ bin
+
+源代码
+GOPATH/mydir/ src/foo/quux
+安装到
+GOPATH/mydir/ bin/quux（而不是GOPATH/mydir/ bin/foo/quux）
+foo/ 前缀被去掉了，这样，你可以把GOPATH/mydir/bin 放到PATH上。
+
+如果设置了 GOBIN，则，被安装到GOBIN，而不是 GOPATH/mydir/bin
+
+
+当使用 module时，就不再使用 GOPATH 来解析 import了。但，使用GOPATH存储下载的source code
+GOPATH/pkg/mod
+
+
+method就是function
+method多点东西，method有个 receiver参数
+receiver出现在 function自己的 参数列表里。func (argument list) methodName
+
+Abs的receiver叫做v，v的类型是Vertex
+
+再重复一遍method和function的区别
+method具有receiver
+把receiver放到 function argument中，就得到了 function
+
+
+method就是function，method仅仅就是多一个receiver而已
+
+还有 pointer receiver一说
+
+receiver的类型是 *T，T本身不能是指针例如*int
+
+pointer receiver时，可以修改receiver是值
+
+value receiver时，无法修改receiver的值
+
+value receiver时，method则作用于：a copy of the original value。除了receiver，其他的function argument也遵循同样的规则
+
+
+入参为 pointer的function，则，调用时，必须使用pointer
+pointer receiver的method，则，调用时，可以pointer，可以 value
+
+
+
+non-struct 类型上，也可以声明method
+要想放置receiver，receiver的type 和 mehtod 必须 位于 同一个package下。
+receiver的type  和 method 不在同一个package，则，无法使用该receiver，即使 built-in type 也不行
+
+var myArray [3]string
+myArray是数组
+myArray的类型是 [3]string，长度3也是类型的一部分
+
+    无需new，无需make，数组就可以用了
+	var myArray [3]string;
+	myArray[0] = "cn"
+	myArray[1] = "中国"
+	fmt.Printf("cap of myArray %d\n", cap(myArray))
+	fmt.Printf("len of myArray %d\n", len(myArray))
+    cap of myArray 3
+    len of myArray 3
+    myArray是数组，长度为3，数组的长度也是数组型的一部分
+
+	for i, s := range myArray {
+		fmt.Printf("i=%d, s=%s, len(s)=%d\n", i, s, len(s))
+	}
+    len(字符串)时，是指字符串的 字节个数
+    i=0, s=cn, len(s)=2
+    i=1, s=中国, len(s)=6
+    i=2, s=, len(s)=0
+
+var mySlice []String
+
+slice, map, chan需要make，数组不需要
+类型--返回值也是类型
+Slice：size是len，再放个整数则是capacity
+Map：空map，但，空间是给定的size
+
+new
+类型--返回值是该类型的指针
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
