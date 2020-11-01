@@ -20,6 +20,7 @@ type T2 struct {
 type F float64
 
 func (t *T) M() {
+	// 接受者也可以是nil
 	if t == nil {
 		fmt.Println("<nil>")
 		return
@@ -37,8 +38,8 @@ func (f F) M() {
 
 func main() {
 	// i就是interface value
-	// 可以认为 interface value 是二元组：
-	// (下面的 特定concrete type的value, interface concrete type)
+	// interface value是二元组：
+	// (concrete type value, concrete type)
 	var i I
 
 	i = &T{S: "Hello"}
@@ -49,13 +50,16 @@ func main() {
 	describe(i)
 	i.M()
 
+	// 接受者是 T2（注意：不是pointer）
+	// 则，可以使用 T2，也可以使用 *T2 来调用
 	i = T2{S: "Hello2"}
 	describe(i)
 	i.M()
 
-	i = &T2{S: "Hello22"}
-	describe(i)
-	i.M()
+	var ii I
+	ii = &T2{S: "Hello22"}
+	describe(ii)
+	ii.M()
 
 	var emptyI *T
 	// concrete value本身是nil。则在nil上调用M()方法
