@@ -151,7 +151,17 @@ Map：空map，但，空间是给定的size
 new
 类型--返回值是该类型的指针
 
+先到这里，后面再看时，看这些
+How to Write Go Code
+https://golang.org/doc/code.html
+Errors咋用、defer/panic/recover咋用
+https://blog.golang.org/defer-panic-and-recover
+https://blog.golang.org/error-handling-and-go
+https://blog.golang.org/go1.13-errors
 
+https://golang.org/doc/effective_go.html
+
+https://golang.org/cmd/go/#hdr-Edit_go_mod_from_tools_or_scripts
 
 
 
